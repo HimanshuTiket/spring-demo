@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - demo:/data/db
+
+  server:
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://db/demo
+      - SPRING_DATA_MONGODB_DATABASE=ServerMonitor
+    build: .
+    ports:
+      - 8080:8080
+
+volumes:
+  demo:
